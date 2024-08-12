@@ -1,0 +1,4 @@
+credentials.env
+chromedriver.exe
+data.csv
+__pycache__
