@@ -2,6 +2,12 @@
 
 If you live in the UK and happen to be receving Universal Credit (UC) while looking for work, you will need to log your job search activities into the UC website. If you are applying for a lot of jobs, this can be a very tedious, manual process. And the UC website is not particularly user friendly (they should hire a UI/UX specialist). This script will help you automate the process of logging the jobs that you have applied for into the UC website.
 
+## Demo
+
+<p align = "center">
+<img height= "400" src ="https://raw.githubusercontent.com/VikSil/UC_journal_automation/trunk/GIF_demo.gif" alt="Universal Credit Website Journal Automation Demo GIF"/>&nbsp;&nbsp;
+</p>
+
 ## Prerequisites
 
 The following assumptions are made about the user of this script:
