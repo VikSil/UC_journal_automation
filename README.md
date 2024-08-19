@@ -45,7 +45,7 @@ Add into the root folder a `data.csv` file with the entries of job applications,
 
 🔴❗ IMPORTANT  🔴❗
 * The names of the columns does not matter, but the sequence does.
-* Make dure that APPLICATION DATE format is '%d/%m/%Y' or change DATE_FORMAT global variable in `main.py` file.
+* Make dure that APPLICATION DATE format is '%Y-%m-%d' or change DATE_FORMAT global variable in `main.py` file.
 * STATUS column must contain `Applied` or `Unsuccessful`.
 * Data from URL and NOTES columns will be submitted into the **Notes** field on the UC journal form.
 

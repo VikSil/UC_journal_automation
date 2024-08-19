@@ -20,13 +20,11 @@ UC_SITE_PASSWORD = env('UC_SITE_PASSWORD')
 UC_SITE_URL = 'https://www.universal-credit.service.gov.uk/sign-in'
 UC_SITE_JOURNAL_URL = 'https://www.universal-credit.service.gov.uk/work-search'
 
-DATE_FORMAT = '%d/%m/%Y'
+DATE_FORMAT = '%Y-%m-%d'
 
 
 def main():
     applications = read_data()
-    print(applications)
-    print(type(applications))
     browser = Browser('./chromedriver.exe')
 
     login(browser)
@@ -64,11 +62,12 @@ def login(browser: Browser):
 
 def got_to_journal(browser: Browser):
     browser.open_page(UC_SITE_JOURNAL_URL)
-    browser.click_button(by=By.ID, id='add-job')
 
 
 def add_jobs(browser: Browser, data: DataFrame):
     for index, row in data.iterrows():
+
+        browser.click_button(by=By.ID, id='add-job')
 
         browser.add_input(by=By.ID, id='id-jobTitle', value=row.iloc[0])
         browser.add_input(by=By.ID, id='id-employer', value=row.iloc[1])
@@ -76,7 +75,11 @@ def add_jobs(browser: Browser, data: DataFrame):
         if row.iloc[2] == 'Applied':
             browser.click_button(by=By.ID, id='clickable-APPLIED')
 
-            application_date = datetime.strptime(row.iloc[3], DATE_FORMAT)
+            try:            
+                application_date = datetime.strptime(row.iloc[3], DATE_FORMAT)
+            except ValueError:
+                sys.exit('Wrong date format. The program will exit')
+
             browser.add_input(by=By.ID, id='id-applicationDate.day', value=str(application_date.day))
             browser.add_input(by=By.ID, id='id-applicationDate.month', value=str(application_date.month))
             browser.add_input(by=By.ID, id='id-applicationDate.year', value=str(application_date.year))
@@ -94,7 +97,6 @@ def add_jobs(browser: Browser, data: DataFrame):
 
         browser.click_button(by=By.ID, id='id-submit-button')
         browser.sleep(3)
-        browser.click_button(by=By.ID, id='add-job')
 
 
 if __name__ == "__main__":
