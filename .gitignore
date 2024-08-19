@@ -1,4 +1,4 @@
 credentials.env
-chromedriver.exe
+chromedriver
 data.csv
 __pycache__
