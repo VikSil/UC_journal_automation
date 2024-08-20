@@ -2,3 +2,4 @@ credentials.env
 chromedriver
 data.csv
 __pycache__
+venv
