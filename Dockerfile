@@ -1,28 +1,19 @@
-# Use an official Python slim base image
-FROM python:3.11-slim
+# Use an official Ubuntu base image
+FROM python:3.10
 
 # Set the working directory inside the container
 WORKDIR /UC_journal_automation
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
-    unzip \
-    && apt-get clean
-
-# Install ChromeDriver (for Selenium)
-RUN CHROME_DRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE` && \
-    curl -O https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip && \
-    unzip chromedriver_linux64.zip -d /usr/local/bin/ && \
-    rm chromedriver_linux64.zip
-
-# Install Python dependencies
-COPY requirements.txt .
-RUN pip install --upgrade pip setuptools
-RUN pip install -r requirements.txt
-
 # Copy the application files
-COPY . .
+COPY . /UC_journal_automation
+
+RUN pip3 install -r requirements.txt
+
+RUN apt-get update && apt-get install -y wget unzip && \
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+apt install -y ./google-chrome-stable_current_amd64.deb && \
+rm google-chrome-stable_current_amd64.deb && \
+apt-get clean
 
 # Command to run your Python script
-CMD ["python", "main.py"]
+CMD ["python3", "main.py"]
