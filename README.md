@@ -16,9 +16,9 @@ The following assumptions are made about the user of this script:
 * You have Chrome web browser installed on your machine.
 * You have Python, pip and git installed on your machine.
 
-## Setup and installation
+## Setup and configuration
 
-First things, first - git clone this repo to your machine:
+Clone this repo to your machine:
 
     
     git clone https://github.com/VikSil/UC_journal_automation.git
@@ -35,11 +35,16 @@ Run the following command to install dependencies (this will take several minute
     pip install -r requirements.txt
 
 Add `credentials.env` file into the root directory with the following content:
+Add `credentials.env` file into the UC_journal_automation directory with the following content:
 
     UC_SITE_USERNAME=YourLoginNameForUCWebsite
     UC_SITE_PASSWORD=YourPasswordForUCWebsite
 
 Make sure that there are no spaces on either line in the `credentials.env` file
+
+## Data source
+
+### Local data source
 
 Add into the root folder a `data.csv` file with the entries of job applications, that you want to submit to the UC website. The file should have the same format as `data_example.csv` file in this repo. 
 
@@ -49,6 +54,18 @@ Add into the root folder a `data.csv` file with the entries of job applications,
 * STATUS column must contain `Applied` or `Unsuccessful`.
 * Data from URL and NOTES columns will be submitted into the **Notes** field on the UC journal form.
 
+
+### Google Sheets
+Applications must be listed in Google spreadheet in the following format:
+![Google Sheet example](gs_example.png)
+
+Click on the Share button on upper right corner of the spreadsheet to be taken to this options page. 
+
+![Google Sheet sharebox](share_gs.png) 
+
+Here access must be configured to `Anyone with the link`.
+
+    
 
 ## Execution
 
