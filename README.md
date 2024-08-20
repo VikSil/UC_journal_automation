@@ -9,16 +9,7 @@ If you live in the UK and happen to be receving Universal Credit (UC) while look
 
 ### Google sheets automation
 
-First things, first - git clone this repo to your machine:
-
-    git clone https://github.com/VikSil/UC_journal_automation.git
-
-Previously this automation script was deployed on a windows local machine and required a manual chromdriver install. However, with this update and the use of the [webdriver_manager](https://github.com/SergeyPirogov/webdriver_manager) package this is no longer required and is also automated.
-
-All the user needs to do now is build dockerfile iamge by running the following command from within side the UC_journal_automation directory.
-
-    docker build -t uc .    
-
+### Credentials
 
 Add `credentials.env` file into the root directory with the following content:
 
@@ -27,14 +18,21 @@ Add `credentials.env` file into the root directory with the following content:
 
 Make sure that there are no spaces on either line in the `credentials.env` file
 
-Add into the roUC_journal_automation directory a `data.csv` file with the entries of job applications, that you want to submit to the UC website. The file should have the same format as `data_example.csv` file in this repo. 
+First things, first - git clone this repo to your machine:
+
+    git clone https://github.com/VikSil/UC_journal_automation.git
+
+Previously this automation script was deployed on a windows local machine and required a manual chromedriver install. However, with with this docker implementation and the use of the [webdriver_manager](https://github.com/SergeyPirogov/webdriver_manager) package this is no longer required and is also automated.
+
+All the user needs to do now is build dockerfile image by running the following command from within side the UC_journal_automation directory.
+
+    docker build -t uc .    
 
 🔴❗ IMPORTANT  🔴❗
 * The names of the columns does not matter, but the sequence does.
 * Make dure that APPLICATION DATE format is '%Y-%m-%d' or change DATE_FORMAT global variable in `main.py` file.
 * STATUS column must contain `Applied` or `Unsuccessful`.
 * Data from URL and NOTES columns will be submitted into the **Notes** field on the UC journal form.
-
 
 ## Execution
 
@@ -43,6 +41,8 @@ Before running this script, have your phone ready to receive an sms with the 2-f
 To start the docker run the following command from the within UC_journal_automation directory:
 
     docker run -it uc 3/3/2024
+
+"3/3/2024 is example of month/day/year formatted cli argument which specifies dates later than this date to be uploaded to the UC Journal.
 
 Because this is a docker contianer implementation for server no gui will pop and will be automated all required of the user is their sms submission-key input to the cli. 
 
