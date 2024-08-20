@@ -5,18 +5,18 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
 import time
-"""
+
 # Set these to work in server enviroment and to work in docker containerised enviroment.
 chrome_options = Options()
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--headless")
-"""
+
 class Browser:
     browser, service = None, None
 
     def __init__(self):
         # no need to get the driver binary or correct version now.
-        self.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()))#, options = chrome_options)
+        self.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = chrome_options)
 
     def open_page(self, url: str):
         self.browser.get(url)
