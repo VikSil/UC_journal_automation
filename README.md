@@ -8,27 +8,34 @@ If you live in the UK and happen to be receving Universal Credit (UC) while look
 ## Setup and installation
 
 ### Google sheets automation
-For the follwing docker image to run and automate the upload of jobs succesful all jobs must be specified in google sheet document with the jobs specified in the same format as 
+For the following docker image to run and automate the upload of jobs succesful all jobs applications must be specified in google sheet document with the jobs specified in the same format as 
 ![Google Sheet example](gs_example.png)
 
-With the job applications in the correct format the user musst then use the click share option and be taken to this options page. 
+🔴❗ IMPORTANT  🔴❗
+* The names of the columns does not matter, but the sequence does.
+* Make dure that APPLICATION DATE values are just the standard data type for google sheet.
+* STATUS column must contain `Applied` or `Unsuccessful`.
+* Data from URL and NOTES columns will be submitted into the **Notes** field on the UC journal form.
+
+With the job applications in the correct format the user must then use the share option and be taken to this options page. 
+
 ![Google Sheet sharebox](share_gs.png) 
+
 Here the user must select anyone with link and then copy said link
 
-Below is example link the user must identify their own FILE
+Below is example link the user must identify their own GS_SHEET_ID keep a record of it for the step below
     
     https://docs.google.com/spreadsheets/d/GS_SHEET_ID/edit?usp=sharing
     
 and with it follow the credential instructions below.
 
-### Credentials
+### Code and setting up Credentials
 
-First things, first - git clone this repo to your machine:
+Firstly - git clone this repo to your machine:
 
     git clone https://github.com/VikSil/UC_journal_automation.git
 
- 
-Add `credentials.env` file into the root directory with the following content:
+Add `credentials.env` file into the UC_journal_automation directory with the following content:
 
     UC_SITE_USERNAME=YourLoginNameForUCWebsite
     UC_SITE_PASSWORD=YourPasswordForUCWebsite
@@ -36,18 +43,13 @@ Add `credentials.env` file into the root directory with the following content:
 
 Make sure that there are no spaces on either line in the `credentials.env` file
 
+## Dockerfile and further automations
 
-Previously this automation script was deployed on a windows local machine and required a manual chromedriver install. However, with with this docker implementation and the use of the [webdriver_manager](https://github.com/SergeyPirogov/webdriver_manager) package this is no longer required and is also automated.
+Previously this automation script was deployed on a windows local machine and required a manual chromedriver install. However, with this docker implementation and the use of the [webdriver_manager](https://github.com/SergeyPirogov/webdriver_manager) package this is no longer required as this step is automated.
 
 All the user needs to do now is build dockerfile image by running the following command from within side the UC_journal_automation directory.
 
     docker build -t uc .    
-
-🔴❗ IMPORTANT  🔴❗
-* The names of the columns does not matter, but the sequence does.
-* Make dure that APPLICATION DATE format is '%Y-%m-%d' or change DATE_FORMAT global variable in `main.py` file.
-* STATUS column must contain `Applied` or `Unsuccessful`.
-* Data from URL and NOTES columns will be submitted into the **Notes** field on the UC journal form.
 
 ## Execution
 
