@@ -7,7 +7,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 # sudo docker run -it uc must be run for following to work
-
 # Set these to work in server enviroment and to work in docker containerised enviroment.
 chrome_options = Options()
 chrome_options.add_argument("--no-sandbox")
