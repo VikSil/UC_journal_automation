@@ -25,7 +25,7 @@ DATE_FORMAT = env('DATE_FORMAT')
 
 def main():
     applications = read_data()
-    browser = Browser('./chromedriver.exe')
+    browser = Browser('./chromedriver')
 
     login(browser)
     browser.sleep(60)  # input the SMS code manually
@@ -105,3 +105,4 @@ def add_jobs(browser: Browser, data: DataFrame):
 
 if __name__ == "__main__":
     main()
+ 
