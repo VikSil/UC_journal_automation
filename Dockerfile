@@ -16,4 +16,5 @@ rm google-chrome-stable_current_amd64.deb && \
 apt-get clean
 
 # Command to run your Python script
-CMD ["python3", "main.py"]
+# Entrpoint needed to pass cli arguements
+ENTRYPOINT ["python3", "main.py"]
