@@ -1,3 +1,4 @@
+import pandas as pd
 import sys
 
 from environ import Env
@@ -8,7 +9,7 @@ from pathlib import Path
 from selenium.webdriver.common.by import By
 
 from browser import Browser
-from gs_reader import sheet_reader 
+#from gs_reader import sheet_reader 
 
 BASE_DIR = Path(__file__).resolve().parent
 env = Env()
@@ -36,7 +37,7 @@ def main():
 
 def read_data():
     try:
-        data = sheet_reader()
+        data = pd.read_csv('data.csv')
     except ParserError as pe:
         print(pe)
         sys.exit('The file appears to have a formatting issue')
