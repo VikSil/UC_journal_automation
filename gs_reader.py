@@ -35,7 +35,7 @@ def sheet_reader():
         # Add the threshold date argument
         parser.add_argument(
             "-d",
-            "--threshold_date",
+            "--threshold-date",
             type=str,
             help=f"Earliest application date in {DATE_FORMAT} format.",
             default=datetime.strptime("1999-12-31", "%Y-%m-%d").strftime(DATE_FORMAT),
@@ -51,5 +51,6 @@ def sheet_reader():
     df["APPLICATION DATE"] = pd.to_datetime(df["APPLICATION DATE"], format=DATE_FORMAT)
     df = df[df["APPLICATION DATE"] >= threshold_date]
     df["APPLICATION DATE"] = df["APPLICATION DATE"].astype(str)
+    df = df.query("STATUS in ('Applied', 'Unsuccessful')")
 
     return df
