@@ -37,7 +37,7 @@ def sheet_reader():
 
     df = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{GS_SHEET_ID}/export?format=csv", parse_dates=["APPLICATION DATE"], date_parser=date_parser)
     
-    df = df[df["APPLICATION DATE"] > threshold_date]
+    df = df[df["APPLICATION DATE"] >= threshold_date]
     df["APPLICATION DATE"] = df["APPLICATION DATE"].astype(str)
     return df
 
