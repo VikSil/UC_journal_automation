@@ -32,7 +32,7 @@ def main():
     got_to_journal(browser)
 
     add_jobs(browser, applications)
-    browser.sleep(60)
+    browser.sleep(20)
     browser.close()
 
 

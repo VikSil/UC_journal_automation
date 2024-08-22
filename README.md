@@ -5,7 +5,7 @@ If you live in the UK and happen to be receving Universal Credit (UC) while look
 ## Demo
 
 <p align = "center">
-<img height= "400" src ="https://raw.githubusercontent.com/VikSil/UC_journal_automation/trunk/GIF_demo.gif" alt="Universal Credit Website Journal Automation Demo GIF"/>&nbsp;&nbsp;
+<img height= "400" src ="https://raw.githubusercontent.com/VikSil/UC_journal_automation/trunk/assets/GIF_demo.gif" alt="Universal Credit Website Journal Automation Demo GIF"/>&nbsp;&nbsp;
 </p>
 
 ## Prerequisites
@@ -35,7 +35,6 @@ Run the following command to install dependencies (this will take several minute
     pip install -r requirements.txt
 
 Add `credentials.env` file into the root directory with the following content:
-Add `credentials.env` file into the UC_journal_automation directory with the following content:
 
     UC_SITE_USERNAME=YourLoginNameForUCWebsite
     UC_SITE_PASSWORD=YourPasswordForUCWebsite
@@ -45,11 +44,11 @@ Make sure that there are no spaces on either line in the `credentials.env` file
 ## Data source
  
 There is an option to either use a .csv file or source the data from a Google Sheets spreadsheet.
-Whichever option you choose, add a configuration into `credentials.env` file with the date format that is used in the data source, e.g.:
+Whichever option you choose, add a configuration into `credentials.env` file for the date format that is used in the data source, e.g.:
 
     DATE_FORMAT=%Y-%m-%d
 
-Make sure that APPLICATION DATE column format in your data source is the same.
+Make sure that APPLICATION DATE column format in your data source uses the same format.
 
 ### Local datasource
 
@@ -62,11 +61,11 @@ Add into the root folder a `data.csv` file with the entries of job applications,
 ### Google Sheets datasource
 
 Applications must be listed in Google Sheets spreadsheet in the following format:
-![Google Sheet example](gs_example.png)
+![Google Sheet example](assets/gs_example.png)
 
-Click on the Share button on upper right corner of the spreadsheet to be taken to this options page. 
+Click on the "Share" button on upper right corner of the spreadsheet to be taken to this options page. 
 
-![Google Sheet sharebox](share_gs.png) 
+![Google Sheet sharebox](assets/share_gs.png) 
 
 Here, access must be configured to `Anyone with the link`.
 
@@ -75,16 +74,17 @@ Add configuration into `credentials.env` file to switch on this functionality an
     USE_GOOGLE_SHEETS=True
     GS_SHEET_ID=l0nG-AnD-S00ph1stiCAT3d-URL-T0_Th3-Work5h33t
 
-The value for GS_SHEET_ID cn be obtained either from the URL bar of the browser, or by clicking on the `Copy link` button in the screenshot above. The URL will look something like this:
+The value for GS_SHEET_ID can be obtained either from the URL bar of the browser, or by clicking on the `Copy link` button in the screenshot above. The URL will look something like this:
 
     https://docs.google.com/spreadsheets/d/GS_SHEET_ID/edit?usp=sharing
 
 When using Google Sheets as the data source:
  * STATUS and APPLICATION DATE columns have to be named exactly that.
  * STATUS column can contain different values, but only rows with values `Applied` or `Unsuccessful` will be processed.
+ * If there are multiple tabs on the Google Sheet, the data must be in the first tab.
  * It is possible to configure the earliest application date to process.
 
- In order to configure the earliest application date to process, add configuration to  `data_example.csv` file, e.g.:
+ In order to configure the earliest application date, add configuration to  `data_example.csv` file, e.g.:
 
     START_DATE=2024-08-14
 
@@ -108,7 +108,7 @@ This will cause a Chrome web browser to pop up. UC website will open, your crede
 
 🔴❗ This is the only manual step. Wait for the script to resume work. ❗🔴
 
-In 60 seconds after logging in the script will navigate to the journal page and start submitting data from the the data source into the UC website. Once the end of the data is reached, the script will wait for 60 seconds and then close the website.
+In 60 seconds after logging in the script will navigate to the journal page and start submitting data from the the data source into the UC website. Once the end of the data is reached, the script will wait for 20 seconds and then close the website.
 
 ## Disclaimer
 The script is operational as of the date of the last commit to GitHub. There are no guarantees of maintanence.
