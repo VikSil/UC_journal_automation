@@ -11,8 +11,8 @@ def sheet_reader():
 
     Argument (optional):
     -d --threshold-date : The earliest application date to be processed
-    
-    Surpassed by environment variable START_DATE 
+
+    Surpassed by environment variable START_DATE
     If no value is available, all data since 1999-12-31 will be processed
 
     Function returns a Pandas Dataframe

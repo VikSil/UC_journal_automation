@@ -1,3 +1,4 @@
+import pandas as pd
 import sys
 
 from environ import Env
@@ -8,7 +9,7 @@ from pathlib import Path
 from selenium.webdriver.common.by import By
 
 from browser import Browser
-from gs_reader import sheet_reader 
+from gs_reader import sheet_reader
 
 BASE_DIR = Path(__file__).resolve().parent
 env = Env()
@@ -78,7 +79,7 @@ def add_jobs(browser: Browser, data: DataFrame):
         if row.iloc[2] == 'Applied':
             browser.click_button(by=By.ID, id='clickable-APPLIED')
 
-            try:            
+            try:
                 application_date = datetime.strptime(row.iloc[3], DATE_FORMAT)
             except ValueError:
                 sys.exit('Wrong date format. The program will exit')
