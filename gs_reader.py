@@ -4,6 +4,10 @@ import argparse
 from pathlib import Path
 from environ import Env
 
+
+def main():
+    print(sheet_reader().iloc[:,3])
+
 def sheet_reader():
     """
     Google sheet reader based on argparse cprocessed command line arguements.
@@ -37,9 +41,11 @@ def sheet_reader():
 
     df = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{GS_SHEET_ID}/export?format=csv", parse_dates=["APPLICATION DATE"], date_parser=date_parser)
     
-    df = df[df["APPLICATION DATE"] > threshold_date]
+    df = df[df["APPLICATION DATE"] >= threshold_date]
     df["APPLICATION DATE"] = df["APPLICATION DATE"].astype(str)
     return df
 
-    
-print(sheet_reader().iloc[:,3])
+if __name__ == "__main__":
+    main()  
+
+
