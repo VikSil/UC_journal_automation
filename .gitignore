@@ -4,6 +4,3 @@ data.csv
 __pycache__
 venv
 .ruff_cache
-gs_example.png
-share_gs.png
-gs_reader.py
