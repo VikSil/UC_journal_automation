@@ -19,7 +19,7 @@ UC_SITE_PASSWORD = env('UC_SITE_PASSWORD')
 UC_SITE_URL = 'https://www.universal-credit.service.gov.uk/sign-in'
 UC_SITE_JOURNAL_URL = 'https://www.universal-credit.service.gov.uk/work-search'
 
-DATE_FORMAT = '%Y-%m-%d'
+DATE_FORMAT = env('DATE_FORMAT')
 
 
 def main():
@@ -37,7 +37,11 @@ def main():
 
 def read_data():
     try:
-        data = sheet_reader()
+        if 'USE_GOOGLE_SHEETS' in env:
+            if env('USE_GOOGLE_SHEETS') == 'True':
+                data = sheet_reader()
+        else:
+            data = pd.read_csv('data.csv')
     except ParserError as pe:
         print(pe)
         sys.exit('The file appears to have a formatting issue')
