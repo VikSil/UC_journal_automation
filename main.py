@@ -9,7 +9,7 @@ from pathlib import Path
 from selenium.webdriver.common.by import By
 
 from browser import Browser
-
+from gs_reader import sheet_reader
 
 BASE_DIR = Path(__file__).resolve().parent
 env = Env()
@@ -20,7 +20,7 @@ UC_SITE_PASSWORD = env('UC_SITE_PASSWORD')
 UC_SITE_URL = 'https://www.universal-credit.service.gov.uk/sign-in'
 UC_SITE_JOURNAL_URL = 'https://www.universal-credit.service.gov.uk/work-search'
 
-DATE_FORMAT = '%Y-%m-%d'
+DATE_FORMAT = env('DATE_FORMAT')
 
 
 def main():
@@ -32,13 +32,17 @@ def main():
     got_to_journal(browser)
 
     add_jobs(browser, applications)
-    browser.sleep(60)
+    browser.sleep(20)
     browser.close()
 
 
 def read_data():
     try:
-        data = pd.read_csv('data.csv')
+        if 'USE_GOOGLE_SHEETS' in env:
+            if env('USE_GOOGLE_SHEETS') == 'True':
+                data = sheet_reader()
+        else:
+            data = pd.read_csv('data.csv')
     except ParserError as pe:
         print(pe)
         sys.exit('The file appears to have a formatting issue')
@@ -75,7 +79,7 @@ def add_jobs(browser: Browser, data: DataFrame):
         if row.iloc[2] == 'Applied':
             browser.click_button(by=By.ID, id='clickable-APPLIED')
 
-            try:            
+            try:
                 application_date = datetime.strptime(row.iloc[3], DATE_FORMAT)
             except ValueError:
                 sys.exit('Wrong date format. The program will exit')
