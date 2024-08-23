@@ -38,7 +38,7 @@ def sheet_reader():
             "--threshold-date",
             type=str,
             help=f"Earliest application date in {DATE_FORMAT} format.",
-            default=datetime.strptime("1999-12-31", "%Y-%m-%d").strftime(DATE_FORMAT),
+            default=datetime.now().strftime(DATE_FORMAT),
         )
         # Parse the arguments
         args = parser.parse_args()

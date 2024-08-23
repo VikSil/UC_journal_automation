@@ -26,7 +26,7 @@ DATE_FORMAT = env('DATE_FORMAT')
 def main():
     applications = read_data()
     browser = Browser()
-
+    print('Starting the UC job application logger...')
     login(browser)
     browser.sleep(60)  # input the SMS code manually
     got_to_journal(browser)
@@ -34,6 +34,8 @@ def main():
     add_jobs(browser, applications)
     browser.sleep(20)
     browser.close()
+
+    print('All done.')
 
 
 def read_data():
@@ -58,16 +60,27 @@ def read_data():
 
 
 def login(browser: Browser):
-    browser.open_page(UC_SITE_URL)
-    browser.add_input(by=By.ID, id='id-userName', value=UC_SITE_USERNAME)
-    browser.add_input(by=By.ID, id='id-password', value=UC_SITE_PASSWORD)
-    browser.click_button(by=By.ID, id='id-submit-button')
+    print('Logging into UC Website...')
+    try:
+        browser.open_page(UC_SITE_URL)
+        browser.add_input(by=By.ID, id='id-userName', value=UC_SITE_USERNAME)
+        browser.add_input(by=By.ID, id='id-password', value=UC_SITE_PASSWORD)
+        browser.click_button(by=By.ID, id='id-submit-button')
 
-    submit_key = input(
-        "submission-key: ",
-    ).strip()
-    browser.add_input(by=By.ID, id='id-verificationToken', value=submit_key)
-    browser.click_button(by=By.ID, id='id-submit-button')
+        browser.sleep(10)
+
+        submit_key = input(
+            "Please input code from sms: ",
+        ).strip()
+        browser.add_input(by=By.ID, id='id-verificationToken', value=submit_key)
+        browser.click_button(by=By.ID, id='id-submit-button')
+
+    except Exception as e:
+        print(e)
+        sys.exit('Something went wrong')
+
+    else:
+        print('Login successful. Will continue in a minute...')
 
 
 def got_to_journal(browser: Browser):
@@ -76,6 +89,8 @@ def got_to_journal(browser: Browser):
 
 def add_jobs(browser: Browser, data: DataFrame):
     for index, row in data.iterrows():
+
+        print(f'Processing record: {row.iloc[0]} - {row.iloc[1]}')
 
         browser.click_button(by=By.ID, id='add-job')
 

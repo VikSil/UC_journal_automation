@@ -1,5 +1,5 @@
 # Use an official Ubuntu base image
-FROM python:3.10
+FROM python:3.11.5
 
 # Set the working directory inside the container
 WORKDIR /UC_journal_automation
@@ -15,6 +15,5 @@ RUN apt-get update && apt-get install -y wget unzip && \
     rm google-chrome-stable_current_amd64.deb && \
     apt-get clean
 
-# Command to run your Python script
 # Entrpoint needed to pass cli arguements
 ENTRYPOINT ["python3", "main.py"]

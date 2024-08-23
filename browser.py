@@ -6,9 +6,10 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
-# Set these to work in server enviroment and to work in docker containerised enviroment.
+# Set these to work in server environment and in a docker container
 chrome_options = Options()
 chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument('--start-maximized')
 chrome_options.add_argument("--headless")
 
 
@@ -17,12 +18,6 @@ class Browser:
 
     def __init__(self):
         self.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-
-    def open_page(self, url: str):
-        self.browser.get(url)
-
-    def close(self):
-        self.browser.close()
 
     def add_input(self, by: By, id: str, value: str):
         field = self.browser.find_element(by=by, value=id)
@@ -33,6 +28,12 @@ class Browser:
         button = self.browser.find_element(by=by, value=id)
         button.click()
         time.sleep(1)
+
+    def close(self):
+        self.browser.close()
+
+    def open_page(self, url: str):
+        self.browser.get(url)
 
     def sleep(self, timeout: int):
         time.sleep(timeout)
