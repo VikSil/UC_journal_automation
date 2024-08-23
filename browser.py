@@ -1,16 +1,21 @@
+import time
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
-import time
+chrome_options = Options()
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument('--start-maximized')
 
 
 class Browser:
     browser, service = None, None
 
     def __init__(self, driver: str):
-        self.service = Service(driver)
-        self.browser = webdriver.Chrome(service=self.service)
+        self.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
     def open_page(self, url: str):
         self.browser.get(url)

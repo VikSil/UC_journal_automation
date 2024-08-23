@@ -2,6 +2,9 @@
 
 If you live in the UK and happen to be receving Universal Credit (UC) while looking for work, you will need to log your job search activities into the UC website. If you are applying for a lot of jobs, this can be a very tedious, manual process. And the UC website is not particularly user friendly (they should hire a UI/UX specialist). This script will help you automate the process of logging the jobs that you have applied for into the UC website.
 
+🔴❗ *This is an operating system dependant solution. It has only been tested on Windows and is not guaranteed to run on all machines. If you are comfortable with using command line and Docker, operating system agnostic version is [here](https://github.com/VikSil/UC_journal_automation/tree/trunk).* ❗🔴
+
+
 ## Demo
 
 <p align = "center">
@@ -23,12 +26,6 @@ Clone this repo to your machine:
     
     git clone https://github.com/VikSil/UC_journal_automation.git
 
-In order to run this script you will need to find out which version of Chrome browser do you use and get a driver for it. [Here](https://www.youtube.com/watch?v=Yh4CnDL44O8) is a video tutorial on how to get the driver (watch up to 2:00). Alternatively  you may follow these steps:
-
-1. In your Chrome browser go to this url: `chrome://settings/help` and note down the version
-1. Go to [this](https://chromedriver.chromium.org/downloads) page and find the ChromeDriver for your Chrome version. If the version is new, you may have to read the text in red at the top of the page and go to **Chrome for Testing availability dashboard** to find the appropriate driver. N.B. The dashboard is frequently unavailable, if it does not work - check back later.
-1. Download the appropriate driver for your Chrome version, operating system (Windows) and processor.
-1. Unzip the `chromedriver.exe` file into the root folder of your project (where the main.py file is). 
 
 Run the following command to install dependencies (this will take several minutes to complete):
 
@@ -84,7 +81,7 @@ When using Google Sheets as the data source:
  * If there are multiple tabs on the Google Sheet, the data must be in the first tab.
  * It is possible to configure the earliest application date to process.
 
- In order to configure the earliest application date, add configuration to  `data_example.csv` file, e.g.:
+ In order to configure the earliest application date, add configuration to  `credentials.env` file, e.g.:
 
     START_DATE=2024-08-14
 
