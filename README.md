@@ -2,20 +2,16 @@
 
 If you live in the UK and happen to be receving Universal Credit (UC) while looking for work, you will need to log your job search activities into the UC website. If you are applying for a lot of jobs, this can be a very tedious, manual process. And the UC website is not particularly user friendly (they should hire a UI/UX specialist). This script will help you automate the process of logging the jobs that you have applied for into the UC website.
 
+🔴❗ *This is an operating system agnostic solution. It uses command line and does not have a graphical interface. If you want to be able to see the website, while the script is running, GUI enabled version is [here](https://github.com/VikSil/UC_journal_automation/tree/GUI-supported) (tested on Windows only)* ❗🔴
+
 ## Prerequisites
- Docker installed on your operating system to run the docker file [see](https://docs.docker.com/engine/install/).
+ Docker installed on your operating system, and running Docker deamon. Installation instructions [here](https://docs.docker.com/engine/install/).
 
 ## Setup and configuration
 
 Clone this repo to your machine:
 
     git clone https://github.com/VikSil/UC_journal_automation.git
-
-Previously this automation script was deployed on a windows local machine and required a manual chromdriver install. However, with this update and the use of the [webdriver_manager](https://github.com/SergeyPirogov/webdriver_manager) package this is no longer required and is also automated.
-
-All the user needs to do now is build dockerfile iamge by running the following command from within side the UC_journal_automation directory.
-
-    docker build -t uc .    
 
 
 Add `credentials.env` file into the root directory with the following content:
@@ -36,15 +32,19 @@ Make sure that APPLICATION DATE column format in your data source uses the same 
 
 ### Local datasource
 
+🔴❗ *If you use local data source option with this Dockerised version of the script, you will have to rebuild Docker image for each run to replace the `data_example.csv`. It is advised to use Google Sheets instead.* 🔴❗
+
 Add into the root folder a `data.csv` file with the entries of job applications, that you want to submit to the UC website. The file should have the same format as `data_example.csv` file in this repo. When using local datasource:
 
 * The names of the columns does not matter, but the sequence does.
 * STATUS column must only contain values `Applied` or `Unsuccessful`.
 * The file must contain only the new applications that you want to add into the UC journal (all lines will be processed). 
 
+
 ### Google Sheets datasource
 
 Applications must be listed in Google Sheets spreadsheet in the following format:
+
 ![Google Sheet example](assets/gs_example.png)
 
 Click on the "Share" button on upper right corner of the spreadsheet to be taken to this options page. 
@@ -68,32 +68,37 @@ When using Google Sheets as the data source:
  * If there are multiple tabs on the Google Sheet, the data must be in the first tab.
  * It is possible to configure the earliest application date to process.
 
- In order to configure the earliest application date, add configuration to  `data_example.csv` file, e.g.:
+🔴❗ *The following instructions detail start date configuration via environment variables. If you use this option with this Dockerised version of the script, you will have to rebuild Docker image for each run to update the date. It is advised to forego this configuration and instead use a comandline argument at execution time.* 🔴❗
+
+In order to configure the earliest application date, add configuration to  `credentials.env` file, e.g.:
 
     START_DATE=2024-08-14
 
 With `START_DATE` configured, the script will ignore all earlier application dates in the Google spreadheet. The format of `START_DATE` must match that of the `DATE_FORMAT` variable. `START_DATE` will only have effect if `USE_GOOGLE_SHEETS=True` is configured.  Configuring `START_DATE` will superceed comadline `--threshold-date` argument (see below).
 
+## Docker Image
+
+Once configuration is done, build a Docker image by running the following command from the root directory:
+
+    docker build -t uc .    
+
+This step will take 10-15 minutes.
+
 ## Execution
 
 Before running this script, have your phone ready to receive an sms with the 2-factor authorisation code.
 
-To start the docker run the following command from the within UC_journal_automation directory:
+To start the Docker run the following command from the root directory:
 
-    docker run -it uc 3/3/2024
+    docker run -it uc -d 2024-08-14
 
+Comandline argument `-d [date]` denotes the earliest application to be processed. The format of the date must match that of the `DATE_FORMAT` variable. This comandline argument will work only if the use of Google Sheets is configured and `START_DATE` variable is **not** configured. Please see [above](#Google-Sheets-datasource).
 
-If use of Google Sheets is configured and `START_DATE` variable is **not** configured, optional comandline argument can be passed to signal to the script the earliest application date to process. Either of these are permissable:
+Shortly after starting the script you should receive an sms on your phone with a  2-factor authorisation code. You have 60 seconds to enter it into the console and press Enter.
 
-    python main.py -d 2024-08-14
-    python main.py --threshold-date 2024-08-14
+🔴❗ **This is the only manual step. Wait for the script to resume work.** ❗🔴
 
-This will cause a Chrome web browser to pop up. UC website will open, your credentials will be entered and login button will be pressed automatically. At this point you should receive an sms on your phone with a  2-factor authorisation code. You have 60 seconds to enter it into the UC website and click the button to continue.
-Because this is a docker contianer implementation for server no gui will pop and will be automated all required of the user is their sms submission-key input to the cli. 
-
-🔴❗ This is the only manual step. Wait for the script to resume work. ❗🔴
-
-In 60 seconds after logging in the script will navigate to the journal page and start submitting data from the the data source into the UC website. Once the end of the data is reached, the script will wait for 20 seconds and then close the website.
+As the script runs, output will be generated about the progress. 
 
 ## Disclaimer
 The script is operational as of the date of the last commit to GitHub. There are no guarantees of maintanence.
