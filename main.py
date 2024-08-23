@@ -22,6 +22,7 @@ UC_SITE_JOURNAL_URL = 'https://www.universal-credit.service.gov.uk/work-search'
 
 DATE_FORMAT = env('DATE_FORMAT')
 
+
 def main():
     applications = read_data()
     browser = Browser()
@@ -33,6 +34,7 @@ def main():
     add_jobs(browser, applications)
     browser.sleep(20)
     browser.close()
+
 
 def read_data():
     try:
@@ -61,9 +63,12 @@ def login(browser: Browser):
     browser.add_input(by=By.ID, id='id-password', value=UC_SITE_PASSWORD)
     browser.click_button(by=By.ID, id='id-submit-button')
 
-    submit_key = input("submission-key: ", ).strip()
+    submit_key = input(
+        "submission-key: ",
+    ).strip()
     browser.add_input(by=By.ID, id='id-verificationToken', value=submit_key)
     browser.click_button(by=By.ID, id='id-submit-button')
+
 
 def got_to_journal(browser: Browser):
     browser.open_page(UC_SITE_JOURNAL_URL)
@@ -106,4 +111,3 @@ def add_jobs(browser: Browser, data: DataFrame):
 
 if __name__ == "__main__":
     main()
- 

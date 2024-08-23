@@ -1,7 +1,3 @@
-# Ignore readme
-README.md
-
-GIF_demo.gif
-
-# Ignore git files.
 .git/
+GIF_demo.gif
+README.md

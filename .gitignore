@@ -1,6 +1,6 @@
-credentials.env
-chromedriver*
-data.csv
-__pycache__
-venv
 .ruff_cache
+__pycache__
+chromedriver*
+credentials.env
+data.csv
+venv
