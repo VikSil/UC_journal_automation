@@ -25,7 +25,7 @@ DATE_FORMAT = env('DATE_FORMAT')
 
 def main():
     applications = read_data()
-    browser = Browser('./chromedriver.exe')
+    browser = Browser()
 
     login(browser)
     browser.sleep(60)  # input the SMS code manually

@@ -14,7 +14,7 @@ chrome_options.add_argument('--start-maximized')
 class Browser:
     browser, service = None, None
 
-    def __init__(self, driver: str):
+    def __init__(self):
         self.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
     def open_page(self, url: str):
