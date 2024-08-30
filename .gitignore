@@ -1,10 +1,6 @@
-credentials.env
-chromedriver.exe
-data.csv
-<<<<<<< HEAD
-__pycache__
-=======
-__pycache__
-venv
 .ruff_cache
->>>>>>> b79455b (Revert to stage of google sheet functionality for personeel use)
+__pycache__
+chromedriver*
+credentials.env
+data.csv
+venv
