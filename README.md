@@ -4,6 +4,10 @@ If you live in the UK and happen to be receving Universal Credit (UC) while look
 
 🔴❗ *This is an operating system agnostic solution. It uses command line and does not have a graphical interface. If you want to be able to see the website, while the script is running, GUI enabled version is [here](https://github.com/VikSil/UC_journal_automation/tree/GUI-supported) (tested on Windows only)* ❗🔴
 
+<p align = "center">
+<img height= "400" src ="https://raw.githubusercontent.com/VikSil/UC_journal_automation/trunk/assets/GIF_demo_dockerised.gif" alt="Universal Credit Website Journal Automation Demo GIF"/>&nbsp;&nbsp;
+</p>
+
 ## Prerequisites
  Docker installed on your operating system, and running Docker deamon. Installation instructions [here](https://docs.docker.com/engine/install/).
 
