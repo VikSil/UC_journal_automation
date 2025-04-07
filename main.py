@@ -1,3 +1,4 @@
+import math
 import pandas as pd
 import sys
 
@@ -101,6 +102,15 @@ def add_jobs(browser: Browser, data: DataFrame):
 
         browser.click_button(by=By.ID, id='id-submit-button')
         browser.sleep(3)
+
+def delete_old_entries(browser: Browser, n:int):
+    page_number = 70 - math.floor(n/16)
+    for _ in range(n):
+        browser.open_page(f'{UC_SITE_JOURNAL_URL}?page={page_number}')
+        browser.click_button(by=By.CLASS_NAME, id = 'job-list__item-link')
+        browser.sleep(2)
+        browser.click_button(by=By.ID, id = 'delete-job')
+        browser.sleep(2)
 
 
 if __name__ == "__main__":
