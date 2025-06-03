@@ -50,6 +50,7 @@ def sheet_reader():
     df = df[df["APPLICATION DATE"].notna()]
     df["APPLICATION DATE"] = pd.to_datetime(df["APPLICATION DATE"], format=DATE_FORMAT)
     df = df[df["APPLICATION DATE"] >= threshold_date]
+    df = df[df['ROLE'].notna()]
     df["APPLICATION DATE"] = df["APPLICATION DATE"].astype(str)
     df = df.query("STATUS in ('Applied', 'Unsuccessful')")
 
